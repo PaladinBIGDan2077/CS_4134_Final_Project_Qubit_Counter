@@ -11,8 +11,6 @@ The code is written in Assembly, more specifically IBM's OpenQASM 3.0. Currently
 
 ### The Math
 
-## The math
-
 **Storing the count.** A 4-qubit counter (N = 2⁴ = 16) holds the count x as one angle per qubit:
 
     φⱼ = 2π · x · 2ʲ / 16  (mod 2π)        j = 0, 1, 2, 3  (q[0] is the least significant)
