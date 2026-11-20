@@ -1,1 +1,9 @@
-# CS_4134_Final_Project_Qubit_Counter
+# CS: 4134, Optional Final Project (QuBit Counter, XYZ-Basis)
+## Written By Daniel J. Lomis
+
+
+The Qubit Counter is a quantum version of a binary counter that stores its count in the phases of its qubits instead of in bits. A classical counter records a number by which bits are 1. Here, each of the four qubits holds part of the number as an angle, and together the angles encode the count. A reset (a Hadamard on every qubit) sets the count to zero. Each tick then turns every qubit by a fixed angle (π/8, π/4, π/2 and π for qubits 0 to 3), so the top qubit flips every tick, the next every two ticks, and so on, like the divide-by-two chain of a ripple counter. Because every qubit updates independently, the counter needs no carry chain. It wraps around modulo 16 on its own, counts down with negative angles, and can even hold fractional counts.
+
+To read the count, the program applies the inverse quantum Fourier transform, which converts the angles back into an ordinary binary number before measurement. Integer counts are read exactly. A fractional count spreads over the two nearest integers in the pattern that phase estimation predicts. The program can also read the phases directly through a second output, the "phase bus," by measuring each qubit in the X and Y bases. That shows the angle on each qubit as the counter runs.
+
+The code is written in Python with Qiskit. It runs every experiment on a simulator, compares the results with the theoretical predictions, and saves figures and tables of the outcomes. The same circuits can be run with the noise of real IBM quantum hardware, simulated, to see how errors affect the counter. Most of those errors come from the readout's two-qubit gates, since each tick uses only single-qubit gates.
