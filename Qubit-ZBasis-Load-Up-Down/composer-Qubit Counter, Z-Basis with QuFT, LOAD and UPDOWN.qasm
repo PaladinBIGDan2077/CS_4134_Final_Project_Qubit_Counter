@@ -1,8 +1,11 @@
 OPENQASM 3.0;
 include "stdgates.inc";
-// QUBIT COUNTER, Z-BASIS
+// QUBIT COUNTER (Z-BASIS)
+// 11/22/2026
 // Written by Daniel J Lomis
-// OPEN-QASM 3.0 BY IBM
+// Virginia Polytechnic Institute and State University
+// CS 4134 - Quantum Computation and Information Processing
+// OPENQASM 3.0 BY IBM
 
 // Hadamard Gate - H gate (rewritten for traditional ALL-CAPs assembly)
 gate HADAMARD           A 
@@ -45,10 +48,11 @@ gate QuFT_dagger        A, B, C, D
     CP(-pi / 2)         C, D;
     HADAMARD            D;
 }
-// X can be any number: negative counts down, 2.5 sits between 2 and 3.
+// X can be any positive float: negative counts down (best set in tick area), 
+// 2.5 sits between 0x2 and 0x3, result will be coming from superposition in
+// that case.
 gate LOAD(X)            A, B, C, D 
 {
-
     HADAMARD            A; 
     HADAMARD            B; 
     HADAMARD            C;
@@ -69,10 +73,10 @@ gate TICK(N)            A, B, C, D
 // -- END OF FUNCTIONS --
 // VARIABLE REGISTER INSTANSIATION
 qubit[4]                Q;
-bit[4]                  PHASE_Z;
+bit[4]                  COUNT;
 //|MNEMONIC(PHASE)      |VARIABLES      |COMMENTS
                                         // LOAD - USE ZERO FOR DEFAULT
-LOAD(0)                 Q[0], 
+LOAD(3.5)               Q[0], 
                         Q[1],
                         Q[2],
                         Q[3];
@@ -113,6 +117,6 @@ barrier                 Q;              // @phaseDisk
 
                                         // BAR 6
 barrier                 Q;
-                                        // FAN OUT
-PHASE_Z                 = measure Q;    // Measure Qubits 0-3, collapsing Superposition onto PHASE_Z[0:3]
+                                        // MEASURE
+COUNT                 = measure Q;      // Measure Qubits 0-3, collapsing Superposition (if float) onto COUNT[0:3]
                                         // END OF FILE
